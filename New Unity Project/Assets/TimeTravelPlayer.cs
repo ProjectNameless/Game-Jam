@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityStandardAssets.Characters.FirstPerson;
 
 public class TimeTravelPlayer : TimeTravel
 {
@@ -9,7 +8,7 @@ public class TimeTravelPlayer : TimeTravel
     {
         if (base.Rewind())
         {
-            gameObject.GetComponent<FirstPersonController>().enabled = false;
+            gameObject.GetComponent<PlayerController>().enabled = false;
             return true;
         }
         return false;
@@ -18,7 +17,7 @@ public class TimeTravelPlayer : TimeTravel
     {
         if(base.Clear())
         {
-            gameObject.GetComponent<FirstPersonController>().enabled = true;
+            gameObject.GetComponent<PlayerController>().enabled = true;
             return true;
         }
         return false;
