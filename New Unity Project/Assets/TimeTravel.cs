@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class TimeTravel : MonoBehaviour
 {
-    private List<TimeStamp> stamps = new List<TimeStamp>();
+    protected List<TimeStamp> stamps = new List<TimeStamp>();
     public int maximumStamps;
     // Update is called once per frame
     void Update()

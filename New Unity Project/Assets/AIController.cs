@@ -7,19 +7,38 @@ public class AIController : MonoBehaviour
     public Vector3[] waypoints;
     public int index;
     public float speed;
+    private float startTime;
+    private float totalDistance;
+    private Vector3 startPos;
+    public bool onPatrol;
     void Update()
     {
-        transform.LookAt(waypoints[index]);
-        if (transform.position.normalized != waypoints[index].normalized)
+        if (!CloseEnough(transform.position, waypoints[index], .1f))
         {
-            transform.position += speed * transform.forward * Time.deltaTime;
+            transform.position = Vector3.Lerp(startPos, waypoints[index], (Time.time - startTime) * speed / totalDistance);
         }
         else
         {
             index++;
             if (index >= waypoints.Length)
+            {
                 index = 0;
+                if (!onPatrol)
+                    speed = 0;
+            }
+            refreshPath();
         }
-
+    }
+    bool CloseEnough(Vector3 a, Vector3 b, float maxDifference)
+    {
+        if (Vector3.Distance(a, b) < maxDifference)
+            return true;
+        return false;
+    }
+    public void refreshPath()
+    {
+        startTime = Time.time;
+        totalDistance = Vector3.Distance(transform.position, waypoints[index]);
+        startPos = transform.position;
     }
 }
