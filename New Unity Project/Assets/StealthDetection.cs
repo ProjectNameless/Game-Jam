@@ -12,9 +12,11 @@ public class StealthDetection : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D other)
     {
-        Debug.Log(other.name);
         if (other.tag.Equals("Player"))
-            other.GetComponent<PlayerController>().changeHealth(-100);
+        {
+            Debug.Log("spotted player");
+            controller.spottedPlayer();
+        }
     }
 
 }

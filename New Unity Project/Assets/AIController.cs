@@ -11,14 +11,19 @@ public class AIController : MonoBehaviour
     private float totalDistance;
     private Vector3 startPos;
     public bool onPatrol;
+    public bool playerSpotted;
+    public int range;
+    public Coroutine tracking;
     void Update()
     {
-        if (!CloseEnough(transform.position, waypoints[index], .1f))
+        if (!CloseEnough(transform.position, waypoints[index], .1f) && !playerSpotted)
         {
+            if (tracking != null)
+                StopCoroutine(tracking);
             faceDirection(waypoints[index]);
             transform.position = Vector3.Lerp(startPos, waypoints[index], (Time.time - startTime) * speed / totalDistance);
         }
-        else
+        else if (!playerSpotted)
         {
             index++;
             if (index >= waypoints.Length)
@@ -27,12 +32,16 @@ public class AIController : MonoBehaviour
                 if (!onPatrol)
                     speed = 0;
             }
-            refreshPath();
+            refreshPath(waypoints[index]);
         }
     }
-    private void OnTriggerEnter(Collider other)
+    public void spottedPlayer()
     {
-        Debug.Log(other.name);
+        if (!playerSpotted)
+        {
+            playerSpotted = true;
+            tracking = StartCoroutine(trackPlayer());
+        }
     }
     bool CloseEnough(Vector3 a, Vector3 b, float maxDifference)
     {
@@ -40,7 +49,7 @@ public class AIController : MonoBehaviour
             return true;
         return false;
     }
-    public void refreshPath()
+    public void refreshPath(Vector3 worldPosition)
     {
         startTime = Time.time;
         totalDistance = Vector3.Distance(transform.position, waypoints[index]);
@@ -50,5 +59,23 @@ public class AIController : MonoBehaviour
     {
         Vector3 Direction = worldPosition - transform.position;
         transform.right = new Vector2(Direction.x, Direction.y);
+    }
+    public IEnumerator trackPlayer()
+    {
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        refreshPath(player.transform.position);
+        while (true)
+        {
+            while (!CloseEnough(transform.position, player.transform.position, range))
+            {
+                Debug.Log("heading to player");
+                faceDirection(player.transform.position);
+                transform.position = Vector3.Lerp(startPos, player.transform.position, (Time.time - startTime) * speed / totalDistance);
+                yield return null;
+            }
+            refreshPath(player.transform.position);
+            Debug.Log("I caught up to the player");
+            yield return null;
+        }
     }
 }

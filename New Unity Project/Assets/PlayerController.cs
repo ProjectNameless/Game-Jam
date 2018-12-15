@@ -19,6 +19,7 @@ public class PlayerController : MonoBehaviour
         health += amt;
         if (health <= 0)
         {
+            Debug.Log("Player is deaded");
             TimeTravelPlayer timetravel = GetComponent<TimeTravelPlayer>();
             StartCoroutine(timetravel.Rewind());
             GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");

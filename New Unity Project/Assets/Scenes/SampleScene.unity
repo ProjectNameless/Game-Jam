@@ -470,7 +470,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   camera: {fileID: 1708715931}
   speed: 1
-  health: 0
+  health: 100
 --- !u!212 &797478971
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -637,6 +637,8 @@ MonoBehaviour:
   index: 0
   speed: 1
   onPatrol: 1
+  playerSpotted: 0
+  range: 5
 --- !u!212 &980906854
 SpriteRenderer:
   m_ObjectHideFlags: 0
