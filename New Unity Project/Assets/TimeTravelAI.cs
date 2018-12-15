@@ -15,23 +15,15 @@ public class TimeTravelAI : TimeTravel
             stamps.RemoveAt(stamps.Count - 1);
         stamps.Insert(0, new TimeStampAI(transform.position, transform.rotation, controller.index));
     }
-    public override bool Clear()
+    public override void Clear()
     {
-        if (base.Clear())
-        {
-            controller.enabled = true;
-            controller.refreshPath();
-            return true;
-        }
-        return false;
+        base.Clear();
+        controller.enabled = true;
+        controller.refreshPath();
     }
-    public override bool Rewind()
+    public override IEnumerator Rewind()
     {
-        if(base.Rewind())
-        {
-            controller.enabled = false;
-            return true;
-        }
-        return false;
+        controller.enabled = false;
+        yield return base.Rewind();
     }
 }

@@ -15,6 +15,7 @@ public class AIController : MonoBehaviour
     {
         if (!CloseEnough(transform.position, waypoints[index], .1f))
         {
+            faceDirection(waypoints[index]);
             transform.position = Vector3.Lerp(startPos, waypoints[index], (Time.time - startTime) * speed / totalDistance);
         }
         else
@@ -29,6 +30,10 @@ public class AIController : MonoBehaviour
             refreshPath();
         }
     }
+    private void OnTriggerEnter(Collider other)
+    {
+        Debug.Log(other.name);
+    }
     bool CloseEnough(Vector3 a, Vector3 b, float maxDifference)
     {
         if (Vector3.Distance(a, b) < maxDifference)
@@ -40,5 +45,10 @@ public class AIController : MonoBehaviour
         startTime = Time.time;
         totalDistance = Vector3.Distance(transform.position, waypoints[index]);
         startPos = transform.position;
+    }
+    public void faceDirection(Vector3 worldPosition)
+    {
+        Vector3 Direction = worldPosition - transform.position;
+        transform.right = new Vector2(Direction.x, Direction.y);
     }
 }

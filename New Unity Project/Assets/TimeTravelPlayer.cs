@@ -4,22 +4,14 @@ using UnityEngine;
 
 public class TimeTravelPlayer : TimeTravel
 {
-    public override bool Rewind()
+    public override IEnumerator Rewind()
     {
-        if (base.Rewind())
-        {
-            gameObject.GetComponent<PlayerController>().enabled = false;
-            return true;
-        }
-        return false;
+        gameObject.GetComponent<PlayerController>();
+        yield return base.Rewind();
     }
-    public override bool Clear()
+    public override void Clear()
     {
-        if(base.Clear())
-        {
-            gameObject.GetComponent<PlayerController>().enabled = true;
-            return true;
-        }
-        return false;
+        gameObject.GetComponent<PlayerController>();
+        base.Clear();
     }
 }

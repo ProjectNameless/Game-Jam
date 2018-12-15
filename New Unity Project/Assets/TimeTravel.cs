@@ -5,33 +5,29 @@ using UnityEngine;
 public class TimeTravel : MonoBehaviour
 {
     protected List<TimeStamp> stamps = new List<TimeStamp>();
+    private bool rewinding;
     public int maximumStamps;
     // Update is called once per frame
     void Update()
     {
-        if (!Rewind())
-            if (!Clear())
+        if (!rewinding)
                 Record();
     }
-    public virtual bool Rewind()
+    public virtual IEnumerator Rewind()
     {
-        if (Input.GetKey(KeyCode.Space) && stamps.Count > 0)
+        while (stamps.Count > 0)
         {
+            rewinding = true;
             stamps[0].Apply(gameObject);
             stamps.RemoveAt(0);
-            return true;
+            yield return null;
         }
-        return false;
+        Clear();
     }
-    public virtual bool Clear()
+    public virtual void Clear()
     {
-        if (Input.GetKeyUp(KeyCode.Space))
-        {
-            stamps.Clear();
-            return true;
-        }
-        else
-            return false;
+        stamps.Clear();
+        rewinding = false;
     }
     public virtual void Record()
     {

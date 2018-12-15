@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - Fire
+  - Enemy
   layers:
   - Default
   - TransparentFX
@@ -44,4 +45,7 @@ TagManager:
     locked: 0
   - name: Player
     uniqueID: 748458451
+    locked: 0
+  - name: Eye
+    uniqueID: 1544298923
     locked: 0
