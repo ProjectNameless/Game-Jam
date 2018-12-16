@@ -5,7 +5,7 @@ using UnityEngine;
 public class TimeTravel : MonoBehaviour
 {
     protected List<TimeStamp> stamps = new List<TimeStamp>();
-    private bool rewinding;
+    public bool rewinding;
     public int maximumStamps;
     // Update is called once per frame
     void Update()
