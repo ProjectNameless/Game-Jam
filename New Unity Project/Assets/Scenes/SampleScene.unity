@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 170076734}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657868, g: 0.49641263, b: 0.57481706, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -935,6 +935,7 @@ GameObject:
   - component: {fileID: 980906853}
   - component: {fileID: 980906857}
   - component: {fileID: 980906856}
+  - component: {fileID: 980906858}
   m_Layer: 0
   m_Name: Test enemy
   m_TagString: Enemy
@@ -976,6 +977,7 @@ MonoBehaviour:
   SMGBulletPrefab: {fileID: 914358916800269052, guid: c1805c608376b2f478968e20b2ce4849,
     type: 3}
   currentTimer: 0
+  rotateSpeed: 0
 --- !u!212 &980906854
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1068,6 +1070,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maximumStamps: 2000
+--- !u!114 &980906858
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 980906852}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 986e241ce21da8044be08a35ca2ba3d7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: 0
 --- !u!1 &1257526643
 GameObject:
   m_ObjectHideFlags: 0
