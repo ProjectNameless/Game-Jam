@@ -7,9 +7,11 @@ public class Bullet : MonoBehaviour
     public int speed;
     public int damage;
     public float decayTime;
-    private void Awake()
+    private AIController shooter;
+    public void init(AIController shooter)
     {
         GetComponent<Rigidbody2D>().AddRelativeForce(new Vector2(speed, 0), ForceMode2D.Impulse);
+        this.shooter = shooter;
     }
     private void Update()
     {
@@ -20,7 +22,7 @@ public class Bullet : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.GetComponent<PlayerController>() != null)
-            collision.gameObject.GetComponent<PlayerController>().changeHealth(damage);
+            collision.gameObject.GetComponent<PlayerController>().changeHealth(damage, shooter);
         if (collision.gameObject.tag.Equals("Player"))
         Destroy(gameObject);
     }

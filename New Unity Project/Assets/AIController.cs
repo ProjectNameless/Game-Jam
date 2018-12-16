@@ -5,6 +5,8 @@ using UnityEngine;
 public class AIController : MonoBehaviour
 {
     [Header("Patrol route")]
+    public GameObject[] Waypoints;
+    [HideInInspector]
     public Vector3[] waypoints;
     public int index;
     public float speed;
@@ -23,6 +25,15 @@ public class AIController : MonoBehaviour
     public GameObject SMGBulletPrefab;
     public float currentTimer;
     public float rotateSpeed;
+    private void Start()
+    {
+        List<Vector3> waypointsToAdd = new List<Vector3>();
+        foreach (GameObject go in Waypoints)
+        {
+            waypointsToAdd.Add(go.transform.position);
+        }
+        waypoints = waypointsToAdd.ToArray();
+    }
     void Update()
     {
         if (!CloseEnough(transform.position, waypoints[index], .1f) && !playerSpotted)
@@ -73,7 +84,7 @@ public class AIController : MonoBehaviour
     public bool faceDirection(Vector3 worldPosition)
     {
         Vector3 Direction = worldPosition - transform.position;
-        transform.right = transform.right - new Vector3((transform.right.x - Direction.x) * rotateSpeed * Time.deltaTime, (transform.right.y - Direction.y) * rotateSpeed * Time.deltaTime);
+        transform.right = transform.right.normalized - ((transform.right - Direction) * speed * Time.deltaTime);
         return true;
     }
     private void FaceOppositeDirection(Vector3 worldPosition)
@@ -119,7 +130,8 @@ public class AIController : MonoBehaviour
                 {
                     for (int i = 0; i < numOfRoundsToFire; i++)
                     {
-                        Instantiate(SMGBulletPrefab, transform.position, transform.rotation);
+                        Bullet bullet = Instantiate(SMGBulletPrefab, transform.position, transform.rotation).GetComponent<Bullet>();
+                        bullet.init(this);
                         yield return new WaitForSeconds(.1f);
                     }
                     currentTimer = fireRate;

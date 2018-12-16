@@ -5,6 +5,7 @@ using UnityEngine;
 public class TimeStampAI : TimeStamp
 {
     public int waypointIndex;
+    public bool playerSpotted;
     public TimeStampAI(Vector3 position, Quaternion rotation, int index) : base (position, rotation)
     {
         waypointIndex = index;
@@ -12,6 +13,16 @@ public class TimeStampAI : TimeStamp
     public override void Apply(GameObject target)
     {
         base.Apply(target);
-        target.GetComponent<AIController>().index = waypointIndex;
+        AIController controller = target.GetComponent<AIController>();
+        if (controller.index != waypointIndex)
+        {
+            controller.index = waypointIndex;
+            controller.refreshPath(controller.waypoints[controller.index]);
+        }
+        if (controller.playerSpotted == true && playerSpotted == false)
+        {
+            controller.playerSpotted = false;
+            controller.StopCoroutine(controller.tracking);
+        }
     }
 }
