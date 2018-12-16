@@ -6,6 +6,8 @@ TagManager:
   tags:
   - Fire
   - Enemy
+  - Health Slider
+  - Health Text
   layers:
   - Default
   - TransparentFX

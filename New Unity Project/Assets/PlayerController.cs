@@ -1,13 +1,19 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
     public new GameObject camera;
     public int speed;
-    public int health;
+    public int currentHealth;
+    public int maxHealth;
     // Update is called once per frame
+    private void Start()
+    {
+        currentHealth = maxHealth;
+    }
     void Update()
     {
         //camera.transform.position = new Vector3(transform.position.x, transform.position.y, -25);
@@ -16,8 +22,10 @@ public class PlayerController : MonoBehaviour
     }
     public void changeHealth(int amt)
     {
-        health += amt;
-        if (health <= 0)
+        currentHealth += amt;
+        GameObject.FindGameObjectWithTag("Health Slider").GetComponent<Slider>().value = currentHealth/maxHealth;
+        GameObject.FindGameObjectWithTag("Health Text").GetComponent<Text>().text = "Health: " + currentHealth;
+        if (currentHealth <= 0)
         {
             Debug.Log("Player is deaded");
             TimeTravelPlayer timetravel = GetComponent<TimeTravelPlayer>();

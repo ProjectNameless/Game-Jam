@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class AIController : MonoBehaviour
 {
+    [Header("Patrol route")]
     public Vector3[] waypoints;
     public int index;
     public float speed;
@@ -21,6 +22,7 @@ public class AIController : MonoBehaviour
     public GameObject shotgunBulletPrefab;
     public GameObject SMGBulletPrefab;
     public float currentTimer;
+    public float rotateSpeed;
     void Update()
     {
         if (!CloseEnough(transform.position, waypoints[index], .1f) && !playerSpotted)
@@ -28,7 +30,7 @@ public class AIController : MonoBehaviour
             if (tracking != null)
                 StopCoroutine(tracking);
             faceDirection(waypoints[index]);
-            transform.position = Vector3.Lerp(startPos, waypoints[index], (Time.time - startTime) * speed / totalDistance);
+            transform.position = transform.position - ((transform.position - waypoints[index]).normalized * speed * Time.deltaTime);
         }
         else if (!playerSpotted)
         {
@@ -71,7 +73,7 @@ public class AIController : MonoBehaviour
     public void faceDirection(Vector3 worldPosition)
     {
         Vector3 Direction = worldPosition - transform.position;
-        transform.right = new Vector2(Direction.x, Direction.y);
+        transform.right = transform.right - new Vector3((transform.right.x - Direction.x) * rotateSpeed * Time.deltaTime, (transform.right.y - Direction.y) * rotateSpeed * Time.deltaTime);
     }
     private void FaceOppositeDirection(Vector3 worldPosition)
     {
@@ -89,7 +91,8 @@ public class AIController : MonoBehaviour
             while (!CloseEnough(transform.position, player.transform.position, minRange))
             {
                 Debug.Log("heading to player");
-                transform.position = Vector3.Lerp(startPos, player.transform.position, (Time.time - startTime) * speed / totalDistance);
+                //transform.position = Vector3.Lerp(startPos, player.transform.position, (Time.time - startTime) * speed / totalDistance);
+                transform.position = transform.position - ((transform.position - player.transform.position).normalized * speed * Time.deltaTime);
                 faceDirection(player.transform.position);
                 //shoot();
                 yield return null;
@@ -98,29 +101,30 @@ public class AIController : MonoBehaviour
             while (TooClose(transform.position, player.transform.position, maxRange))
             {
                 Debug.Log("running from player");
-                transform.position = Vector3.Lerp(startPos, startPos + (transform.position-player.transform.position), (Time.time - startTime) * speed / totalDistance);
+                //transform.position = Vector3.Lerp(startPos, startPos + (transform.position - player.transform.position), (Time.time - startTime) * speed / totalDistance);
+                transform.position = transform.position + ((transform.position - player.transform.position).normalized * speed * Time.deltaTime);
                 faceDirection(player.transform.position);
                 //shoot();
                 yield return null;
             }
-                currentTimer -= Time.deltaTime;
-                if (currentTimer <= 0)
+            currentTimer -= Time.deltaTime;
+            if (currentTimer <= 0)
+            {
+                if (gunType == weaponType.Shotgun)
                 {
-                    if (gunType == weaponType.Shotgun)
-                    {
-                        Instantiate(shotgunBulletPrefab, transform.position, transform.rotation);
-                        currentTimer = fireRate;
-                    }
-                    else if (gunType == weaponType.SMG)
-                    {
-                        for (int i = 0; i < numOfRoundsToFire; i++)
-                        {
-                            Instantiate(SMGBulletPrefab, transform.position, transform.rotation);
-                            yield return new WaitForSeconds(.1f);
-                        }
-                        currentTimer = fireRate;
-                    }
+                    Instantiate(shotgunBulletPrefab, transform.position, transform.rotation);
+                    currentTimer = fireRate;
                 }
+                else if (gunType == weaponType.SMG)
+                {
+                    for (int i = 0; i < numOfRoundsToFire; i++)
+                    {
+                        Instantiate(SMGBulletPrefab, transform.position, transform.rotation);
+                        yield return new WaitForSeconds(.1f);
+                    }
+                    currentTimer = fireRate;
+                }
+            }
             Debug.Log("I caught up to the player");
             yield return null;
         }
