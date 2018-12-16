@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
@@ -22,8 +23,11 @@ public class PlayerController : MonoBehaviour
     {
         //camera.transform.position = new Vector3(transform.position.x, transform.position.y, -25);
         //faceDirection(camera.GetComponent<Camera>().ViewportToWorldPoint(Input.mousePosition));
-        transform.Translate(new Vector3(Input.GetAxisRaw("Horizontal") * speed * Time.deltaTime, Input.GetAxisRaw("Vertical") * speed * Time.deltaTime, 0));
-        faceDirectionMouse();
+        if (!GetComponent<TimeTravelPlayer>().rewinding)
+        {
+            transform.position += (new Vector3(Input.GetAxisRaw("Horizontal") * speed * Time.deltaTime, Input.GetAxisRaw("Vertical") * speed * Time.deltaTime, 0));
+            faceDirectionMouse();
+        }
     }
     public TimeTravel[] changeHealth(int amt)
     {
@@ -75,7 +79,7 @@ public class PlayerController : MonoBehaviour
         }
         if(killer.gameObject.GetComponent<enemyHealth>().health > 0)
         {
-            //game over
+            SceneManager.LoadScene(2);
         }
     }
 }
