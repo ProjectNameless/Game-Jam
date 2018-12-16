@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 828213514769173433}
   - component: {fileID: 2541863576603046465}
   - component: {fileID: 1083631473728139391}
+  - component: {fileID: 7594314554563851887}
   m_Layer: 0
   m_Name: SMG round placeholder
   m_TagString: Untagged
@@ -146,3 +147,16 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 1.28
+--- !u!114 &7594314554563851887
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 914358916800269052}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: efc2c9d72bb9ef64dba1925bf9a4ae46, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maximumStamps: 2000

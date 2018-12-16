@@ -29,7 +29,7 @@ public class AIController : MonoBehaviour
         {
             if (tracking != null)
                 StopCoroutine(tracking);
-            faceDirection(waypoints[index]);
+            if(faceDirection(waypoints[index]))
             transform.position = transform.position - ((transform.position - waypoints[index]).normalized * speed * Time.deltaTime);
         }
         else if (!playerSpotted)
@@ -70,10 +70,11 @@ public class AIController : MonoBehaviour
         totalDistance = Vector3.Distance(transform.position, waypoints[index]);
         startPos = transform.position;
     }
-    public void faceDirection(Vector3 worldPosition)
+    public bool faceDirection(Vector3 worldPosition)
     {
         Vector3 Direction = worldPosition - transform.position;
         transform.right = transform.right - new Vector3((transform.right.x - Direction.x) * rotateSpeed * Time.deltaTime, (transform.right.y - Direction.y) * rotateSpeed * Time.deltaTime);
+        return true;
     }
     private void FaceOppositeDirection(Vector3 worldPosition)
     {
@@ -87,10 +88,10 @@ public class AIController : MonoBehaviour
         refreshPath(player.transform.position);
         while (true)
         {
+            Debug.Log("Running");
             faceDirection(player.transform.position);
             while (!CloseEnough(transform.position, player.transform.position, minRange))
             {
-                Debug.Log("heading to player");
                 //transform.position = Vector3.Lerp(startPos, player.transform.position, (Time.time - startTime) * speed / totalDistance);
                 transform.position = transform.position - ((transform.position - player.transform.position).normalized * speed * Time.deltaTime);
                 faceDirection(player.transform.position);
@@ -100,7 +101,6 @@ public class AIController : MonoBehaviour
             refreshPath(player.transform.position);
             while (TooClose(transform.position, player.transform.position, maxRange))
             {
-                Debug.Log("running from player");
                 //transform.position = Vector3.Lerp(startPos, startPos + (transform.position - player.transform.position), (Time.time - startTime) * speed / totalDistance);
                 transform.position = transform.position + ((transform.position - player.transform.position).normalized * speed * Time.deltaTime);
                 faceDirection(player.transform.position);
@@ -125,7 +125,6 @@ public class AIController : MonoBehaviour
                     currentTimer = fireRate;
                 }
             }
-            Debug.Log("I caught up to the player");
             yield return null;
         }
     }

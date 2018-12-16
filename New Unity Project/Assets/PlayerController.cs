@@ -13,6 +13,7 @@ public class PlayerController : MonoBehaviour
     private void Start()
     {
         currentHealth = maxHealth;
+        GameObject.FindGameObjectWithTag("Health Slider").GetComponent<Slider>().maxValue = maxHealth;
     }
     void Update()
     {
@@ -23,18 +24,13 @@ public class PlayerController : MonoBehaviour
     public void changeHealth(int amt)
     {
         currentHealth += amt;
-        GameObject.FindGameObjectWithTag("Health Slider").GetComponent<Slider>().value = currentHealth/maxHealth;
+        GameObject.FindGameObjectWithTag("Health Slider").GetComponent<Slider>().value = currentHealth;
         GameObject.FindGameObjectWithTag("Health Text").GetComponent<Text>().text = "Health: " + currentHealth;
         if (currentHealth <= 0)
         {
-            Debug.Log("Player is deaded");
-            TimeTravelPlayer timetravel = GetComponent<TimeTravelPlayer>();
-            StartCoroutine(timetravel.Rewind());
-            GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
-            foreach (GameObject enemy in enemies)
-            {
-                StartCoroutine(enemy.GetComponent<TimeTravelAI>().Rewind());
-            }
+            TimeTravel[] travelers = FindObjectsOfType<TimeTravel>();
+            foreach (TimeTravel traveler in travelers)
+                StartCoroutine(traveler.Rewind());
         }
     }
 
