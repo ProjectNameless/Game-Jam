@@ -89,7 +89,7 @@ public class AIController : MonoBehaviour
             while (TooClose(transform.position, player.transform.position, maxRange))
             {
                 Debug.Log("running from player");
-                transform.position = Vector3.Lerp(startPos, startPos + new Vector3(5,5), (Time.time - startTime) * speed / totalDistance);
+                transform.position = Vector3.Lerp(startPos, startPos + (transform.position-player.transform.position), (Time.time - startTime) * speed / totalDistance);
                 yield return null;
             }
             Debug.Log("I caught up to the player");
