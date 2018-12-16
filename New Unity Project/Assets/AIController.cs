@@ -15,6 +15,12 @@ public class AIController : MonoBehaviour
     public int minRange;
     public int maxRange;
     public Coroutine tracking;
+    public int fireRate;
+    public weaponType gunType;
+    public int numOfRoundsToFire;
+    public GameObject shotgunBulletPrefab;
+    public GameObject SMGBulletPrefab;
+    public float currentTimer;
     void Update()
     {
         if (!CloseEnough(transform.position, waypoints[index], .1f) && !playerSpotted)
@@ -74,6 +80,7 @@ public class AIController : MonoBehaviour
     }
     public IEnumerator trackPlayer()
     {
+        currentTimer = fireRate;
         GameObject player = GameObject.FindGameObjectWithTag("Player");
         refreshPath(player.transform.position);
         while (true)
@@ -83,6 +90,8 @@ public class AIController : MonoBehaviour
             {
                 Debug.Log("heading to player");
                 transform.position = Vector3.Lerp(startPos, player.transform.position, (Time.time - startTime) * speed / totalDistance);
+                faceDirection(player.transform.position);
+                //shoot();
                 yield return null;
             }
             refreshPath(player.transform.position);
@@ -90,10 +99,35 @@ public class AIController : MonoBehaviour
             {
                 Debug.Log("running from player");
                 transform.position = Vector3.Lerp(startPos, startPos + (transform.position-player.transform.position), (Time.time - startTime) * speed / totalDistance);
+                faceDirection(player.transform.position);
+                //shoot();
                 yield return null;
             }
+                currentTimer -= Time.deltaTime;
+                if (currentTimer <= 0)
+                {
+                    if (gunType == weaponType.Shotgun)
+                    {
+                        Instantiate(shotgunBulletPrefab, transform.position, transform.rotation);
+                        currentTimer = fireRate;
+                    }
+                    else if (gunType == weaponType.SMG)
+                    {
+                        for (int i = 0; i < numOfRoundsToFire; i++)
+                        {
+                            Instantiate(SMGBulletPrefab, transform.position, transform.rotation);
+                            yield return new WaitForSeconds(.1f);
+                        }
+                        currentTimer = fireRate;
+                    }
+                }
             Debug.Log("I caught up to the player");
             yield return null;
         }
+    }
+    public enum weaponType
+    {
+        Shotgun,
+        SMG
     }
 }
