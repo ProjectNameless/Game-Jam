@@ -12,7 +12,8 @@ public class AIController : MonoBehaviour
     private Vector3 startPos;
     public bool onPatrol;
     public bool playerSpotted;
-    public int range;
+    public int minRange;
+    public int maxRange;
     public Coroutine tracking;
     void Update()
     {
@@ -43,9 +44,15 @@ public class AIController : MonoBehaviour
             tracking = StartCoroutine(trackPlayer());
         }
     }
-    bool CloseEnough(Vector3 a, Vector3 b, float maxDifference)
+    bool CloseEnough(Vector3 a, Vector3 b, float maxDistance)
     {
-        if (Vector3.Distance(a, b) < maxDifference)
+        if (Vector3.Distance(a, b) <= maxDistance)
+            return true;
+        return false;
+    }
+    bool TooClose(Vector3 a, Vector3 b, float minDistance)
+    {
+        if (Vector3.Distance(a, b) < minDistance)
             return true;
         return false;
     }
@@ -60,20 +67,31 @@ public class AIController : MonoBehaviour
         Vector3 Direction = worldPosition - transform.position;
         transform.right = new Vector2(Direction.x, Direction.y);
     }
+    private void FaceOppositeDirection(Vector3 worldPosition)
+    {
+        Vector3 Direction = worldPosition + transform.position;
+        transform.right = new Vector2(Direction.x, Direction.y);
+    }
     public IEnumerator trackPlayer()
     {
         GameObject player = GameObject.FindGameObjectWithTag("Player");
         refreshPath(player.transform.position);
         while (true)
         {
-            while (!CloseEnough(transform.position, player.transform.position, range))
+            faceDirection(player.transform.position);
+            while (!CloseEnough(transform.position, player.transform.position, minRange))
             {
                 Debug.Log("heading to player");
-                faceDirection(player.transform.position);
                 transform.position = Vector3.Lerp(startPos, player.transform.position, (Time.time - startTime) * speed / totalDistance);
                 yield return null;
             }
             refreshPath(player.transform.position);
+            while (TooClose(transform.position, player.transform.position, maxRange))
+            {
+                Debug.Log("running from player");
+                transform.position = Vector3.Lerp(startPos, startPos + new Vector3(5,5), (Time.time - startTime) * speed / totalDistance);
+                yield return null;
+            }
             Debug.Log("I caught up to the player");
             yield return null;
         }
