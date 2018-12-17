@@ -7,26 +7,60 @@ using UnityEngine.SceneManagement;
 public class PlayerController : MonoBehaviour
 {
     public new GameObject camera;
+    private int regularSpeed;
     public int speed;
     public int currentHealth;
     public int maxHealth;
     public float killTime;
     public float startingKillTime;
     public GameObject marker;
+    public GameObject wrench;
+    public int wrenchDamage;
+    public LayerMask whatToHit;
+    public GameObject timeBomb;
+    public float maxSprint;
+    private float sprintTime = 0;
+    private float sprintCooldown = 0;
     // Update is called once per frame
     private void Start()
     {
         currentHealth = maxHealth;
         GameObject.FindGameObjectWithTag("Health Slider").GetComponent<Slider>().maxValue = maxHealth;
+        regularSpeed = speed;
+        sprintTime = maxSprint;
     }
     void Update()
     {
-        //camera.transform.position = new Vector3(transform.position.x, transform.position.y, -25);
-        //faceDirection(camera.GetComponent<Camera>().ViewportToWorldPoint(Input.mousePosition));
         if (!GetComponent<TimeTravelPlayer>().rewinding)
         {
+            sprintCooldown -= Time.deltaTime;
+            if (sprintTime >= 0 && sprintCooldown <= 0)
+            {
+                if (Input.GetKey(KeyCode.LeftShift))
+                {
+                    speed = regularSpeed * 2;
+                    sprintTime -= Time.deltaTime;
+                }
+                else
+                {
+                    speed = regularSpeed;
+                }
+            }else if(sprintTime <= 0)
+            {
+                sprintTime = maxSprint;
+                sprintCooldown = maxSprint * 2;
+                speed = regularSpeed;
+            }
             transform.position += (new Vector3(Input.GetAxisRaw("Horizontal") * speed * Time.deltaTime, Input.GetAxisRaw("Vertical") * speed * Time.deltaTime, 0));
             faceDirectionMouse();
+            if (Input.GetMouseButtonDown(0))
+            {
+                SwingAxe();
+            }
+            if (Input.GetKeyDown(KeyCode.B))
+            {
+                Instantiate(timeBomb, transform.position, transform.rotation);
+            }
         }
     }
     public TimeTravel[] changeHealth(int amt)
@@ -80,6 +114,16 @@ public class PlayerController : MonoBehaviour
         if(killer.gameObject.GetComponent<enemyHealth>().health > 0)
         {
             SceneManager.LoadScene(2);
+        }
+    }
+    void SwingAxe()
+    {
+        //Animate
+        RaycastHit2D hit = Physics2D.Raycast(wrench.transform.position, transform.position - Camera.main.ScreenToWorldPoint(Input.mousePosition), 1f, whatToHit);
+        if (hit.collider != null)
+        {
+            Debug.Log("Hit " + hit.collider.name);
+            hit.collider.GetComponent<AIController>().ChangeHealth(wrenchDamage);
         }
     }
 }

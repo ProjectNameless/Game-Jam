@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 4702945834091251744}
   - component: {fileID: 4702945834091251745}
   - component: {fileID: 6610256218463388209}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Test enemy
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -96,15 +96,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3954f3e45c3d63640b3999b1bb33e01f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  waypoints:
-  - {x: 4, y: 0, z: 0}
-  - {x: 5, y: 1, z: 0}
-  - {x: 6, y: 1, z: 0}
-  - {x: 5, y: 0, z: 0}
-  - {x: 4, y: -1, z: 0}
-  - {x: 5, y: -2, z: 0}
-  - {x: 6, y: -3, z: 0}
-  - {x: 7, y: -4, z: 0}
+  Waypoints:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  waypoints: []
   index: 0
   speed: 1
   onPatrol: 1
@@ -119,6 +116,7 @@ MonoBehaviour:
     type: 3}
   currentTimer: 0
   rotateSpeed: 1
+  health: 100
 --- !u!114 &4702945834091251744
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -131,6 +129,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 127e89f25162d89419ce17db5013b1b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rewinding: 0
   maximumStamps: 2000
 --- !u!70 &4702945834091251745
 CapsuleCollider2D:
@@ -188,7 +187,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4702945835425115706}
   m_LocalRotation: {x: -0, y: -0, z: 0.39484644, w: 0.9187471}
-  m_LocalPosition: {x: 0.777, y: -0.866, z: 0}
+  m_LocalPosition: {x: 0.939, y: -0.866, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4702945834091251758}
