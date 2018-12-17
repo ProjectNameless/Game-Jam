@@ -25,6 +25,7 @@ public class AIController : MonoBehaviour
     public GameObject SMGBulletPrefab;
     public float currentTimer;
     public float rotateSpeed;
+    public int health;
     private void Start()
     {
         List<Vector3> waypointsToAdd = new List<Vector3>();
@@ -63,6 +64,10 @@ public class AIController : MonoBehaviour
             tracking = StartCoroutine(trackPlayer());
         }
     }
+    public void ChangeHealth(int amt)
+    {
+        health += amt;
+    }
     bool CloseEnough(Vector3 a, Vector3 b, float maxDistance)
     {
         if (Vector3.Distance(a, b) <= maxDistance)
@@ -87,11 +92,6 @@ public class AIController : MonoBehaviour
         transform.right = transform.right.normalized - ((transform.right - Direction) * speed * Time.deltaTime);
         return true;
     }
-    private void FaceOppositeDirection(Vector3 worldPosition)
-    {
-        Vector3 Direction = worldPosition + transform.position;
-        transform.right = new Vector2(Direction.x, Direction.y);
-    }
     public IEnumerator trackPlayer()
     {
         currentTimer = fireRate;
@@ -99,7 +99,7 @@ public class AIController : MonoBehaviour
         refreshPath(player.transform.position);
         while (true)
         {
-            Debug.Log("Running");
+            //Debug.Log("Running");
             faceDirection(player.transform.position);
             while (!CloseEnough(transform.position, player.transform.position, minRange))
             {
@@ -136,6 +136,10 @@ public class AIController : MonoBehaviour
                     }
                     currentTimer = fireRate;
                 }
+            }
+            while (health <= 0)
+            {
+                yield return null;
             }
             yield return null;
         }
