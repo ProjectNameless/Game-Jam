@@ -32,6 +32,5 @@ public class enemyHealth : MonoBehaviour
         {
             Die();
         }
-        Debug.Log(health);
     }
 }

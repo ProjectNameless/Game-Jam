@@ -93,7 +93,6 @@ GameObject:
   - component: {fileID: 7234427513569002931}
   - component: {fileID: 7234427513569002929}
   - component: {fileID: 7234427513569002928}
-  - component: {fileID: 4448637969563216495}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -180,9 +179,6 @@ MonoBehaviour:
   speed: 1
   currentHealth: 0
   maxHealth: 2
-  killTime: 0
-  startingKillTime: 0
-  marker: {fileID: 0}
 --- !u!114 &7234427513569002931
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -195,7 +191,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e3e8a2272ca06ad4ab8b341157bf06d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rewinding: 0
   maximumStamps: 2000
 --- !u!61 &7234427513569002929
 BoxCollider2D:
@@ -244,19 +239,3 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!114 &4448637969563216495
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7234427513569002935}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0561038ab98667045b639af0c33e2dd1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  damage: 10
-  range: 30
-  attackDelay: 2
-  player: {fileID: 7234427513569002935}
