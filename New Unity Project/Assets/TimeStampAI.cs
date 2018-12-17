@@ -17,7 +17,7 @@ public class TimeStampAI : TimeStamp
         if (controller.index != waypointIndex)
         {
             controller.index = waypointIndex;
-            controller.refreshPath(controller.waypoints[controller.index]);
+            controller.RefreshPath(controller.waypoints[controller.index]);
         }
         if (controller.playerSpotted == true && playerSpotted == false)
         {

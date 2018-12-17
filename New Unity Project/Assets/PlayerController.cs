@@ -113,7 +113,7 @@ public class PlayerController : MonoBehaviour
         }
         if(killer.gameObject.GetComponent<enemyHealth>().health > 0)
         {
-            SceneManager.LoadScene(2);
+            SceneManager.LoadScene(3);
         }
     }
     void SwingAxe()

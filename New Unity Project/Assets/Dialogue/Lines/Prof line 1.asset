@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6aba1a756a1843e478904e3c1e1be2e4, type: 3}
+  m_Name: Prof line 1
+  m_EditorClassIdentifier: 
+  text: LILIAM It's very nearly done this will change the WORLD!
+  time: 1
+  nextEvent: 
+  voice: {fileID: 8300000, guid: ec4d92a337d74f448b0c095801b06db2, type: 3}
+  interuptable: 0

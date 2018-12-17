@@ -15,7 +15,7 @@ public class StealthDetection : MonoBehaviour
         if (other.tag.Equals("Player"))
         {
             Debug.Log("spotted player");
-            controller.spottedPlayer();
+            controller.SpottedPlayer();
         }
     }
 

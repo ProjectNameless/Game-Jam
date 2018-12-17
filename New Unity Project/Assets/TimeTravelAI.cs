@@ -19,7 +19,7 @@ public class TimeTravelAI : TimeTravel
     {
         base.Clear();
         controller.enabled = true;
-        controller.refreshPath(controller.waypoints[controller.index]);
+        controller.RefreshPath(controller.waypoints[controller.index]);
     }
     public override IEnumerator Rewind()
     {

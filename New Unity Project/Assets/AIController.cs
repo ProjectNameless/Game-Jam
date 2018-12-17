@@ -23,9 +23,11 @@ public class AIController : MonoBehaviour
     public int numOfRoundsToFire;
     public GameObject shotgunBulletPrefab;
     public GameObject SMGBulletPrefab;
+    public GameObject pistolBulletPrefab;
     public float currentTimer;
     public float rotateSpeed;
     public int health;
+    public GameObject gunBarrel;
     private void Start()
     {
         List<Vector3> waypointsToAdd = new List<Vector3>();
@@ -41,7 +43,7 @@ public class AIController : MonoBehaviour
         {
             if (tracking != null)
                 StopCoroutine(tracking);
-            if(faceDirection(waypoints[index]))
+            if(FaceDirection(waypoints[index]))
             transform.position = transform.position - ((transform.position - waypoints[index]).normalized * speed * Time.deltaTime);
         }
         else if (!playerSpotted)
@@ -53,15 +55,15 @@ public class AIController : MonoBehaviour
                 if (!onPatrol)
                     speed = 0;
             }
-            refreshPath(waypoints[index]);
+            RefreshPath(waypoints[index]);
         }
     }
-    public void spottedPlayer()
+    public void SpottedPlayer()
     {
         if (!playerSpotted)
         {
             playerSpotted = true;
-            tracking = StartCoroutine(trackPlayer());
+            tracking = StartCoroutine(TrackPlayer());
         }
     }
     public void ChangeHealth(int amt)
@@ -80,60 +82,68 @@ public class AIController : MonoBehaviour
             return true;
         return false;
     }
-    public void refreshPath(Vector3 worldPosition)
+    public void RefreshPath(Vector3 worldPosition)
     {
         startTime = Time.time;
         totalDistance = Vector3.Distance(transform.position, waypoints[index]);
         startPos = transform.position;
     }
-    public bool faceDirection(Vector3 worldPosition)
+    public bool FaceDirection(Vector3 worldPosition)
     {
-        Vector3 Direction = worldPosition - transform.position;
-        transform.right = transform.right.normalized - ((transform.right - Direction) * speed * Time.deltaTime);
+        Vector3 Direction = worldPosition - gunBarrel.transform.position;
+        gunBarrel.transform.right = gunBarrel.transform.right.normalized - ((gunBarrel.transform.right - Direction) * speed * Time.deltaTime);
         return true;
     }
-    public IEnumerator trackPlayer()
+    public IEnumerator TrackPlayer()
     {
         currentTimer = fireRate;
         GameObject player = GameObject.FindGameObjectWithTag("Player");
-        refreshPath(player.transform.position);
+        RefreshPath(player.transform.position);
         while (true)
         {
             //Debug.Log("Running");
-            faceDirection(player.transform.position);
+            FaceDirection(player.transform.position);
             while (!CloseEnough(transform.position, player.transform.position, minRange))
             {
                 //transform.position = Vector3.Lerp(startPos, player.transform.position, (Time.time - startTime) * speed / totalDistance);
                 transform.position = transform.position - ((transform.position - player.transform.position).normalized * speed * Time.deltaTime);
-                faceDirection(player.transform.position);
+                FaceDirection(player.transform.position);
                 //shoot();
                 yield return null;
             }
-            refreshPath(player.transform.position);
+            RefreshPath(player.transform.position);
             while (TooClose(transform.position, player.transform.position, maxRange))
             {
                 //transform.position = Vector3.Lerp(startPos, startPos + (transform.position - player.transform.position), (Time.time - startTime) * speed / totalDistance);
                 transform.position = transform.position + ((transform.position - player.transform.position).normalized * speed * Time.deltaTime);
-                faceDirection(player.transform.position);
+                FaceDirection(player.transform.position);
                 //shoot();
                 yield return null;
             }
             currentTimer -= Time.deltaTime;
             if (currentTimer <= 0)
             {
+                Animator anim = GetComponent<Animator>();
                 if (gunType == weaponType.Shotgun)
                 {
-                    Instantiate(shotgunBulletPrefab, transform.position, transform.rotation);
+                    anim.SetTrigger("Shoot");
+                    Instantiate(shotgunBulletPrefab, gunBarrel.transform.position, gunBarrel.transform.rotation);
                     currentTimer = fireRate;
                 }
                 else if (gunType == weaponType.SMG)
                 {
                     for (int i = 0; i < numOfRoundsToFire; i++)
                     {
-                        Bullet bullet = Instantiate(SMGBulletPrefab, transform.position, transform.rotation).GetComponent<Bullet>();
+                        anim.SetTrigger("Shoot");
+                        Bullet bullet = Instantiate(SMGBulletPrefab, gunBarrel.transform.position, gunBarrel.transform.rotation).GetComponent<Bullet>();
                         bullet.init(this);
                         yield return new WaitForSeconds(.1f);
                     }
+                    currentTimer = fireRate;
+                }else if(gunType == weaponType.Pistol)
+                {
+                    anim.SetTrigger("Shoot");
+                    Instantiate(pistolBulletPrefab, gunBarrel.transform.position, gunBarrel.transform.rotation);
                     currentTimer = fireRate;
                 }
             }
@@ -147,6 +157,7 @@ public class AIController : MonoBehaviour
     public enum weaponType
     {
         Shotgun,
-        SMG
+        SMG,
+        Pistol
     }
 }
