@@ -28,6 +28,7 @@ public class AIController : MonoBehaviour
     public float rotateSpeed;
     public int health;
     public GameObject gunBarrel;
+    Animator anim;
     private void Start()
     {
         List<Vector3> waypointsToAdd = new List<Vector3>();
@@ -36,6 +37,7 @@ public class AIController : MonoBehaviour
             waypointsToAdd.Add(go.transform.position);
         }
         waypoints = waypointsToAdd.ToArray();
+        anim = GetComponent<Animator>();
     }
     void Update()
     {
@@ -92,6 +94,32 @@ public class AIController : MonoBehaviour
     {
         Vector3 Direction = worldPosition - gunBarrel.transform.position;
         gunBarrel.transform.right = gunBarrel.transform.right.normalized - ((gunBarrel.transform.right - Direction) * speed * Time.deltaTime);
+        float rotz = gunBarrel.transform.rotation.eulerAngles.z;
+        //Debug.Log(rotz);
+        if (rotz < 45 || rotz > 315)
+        {
+            anim.SetBool("Right", true);
+            anim.SetBool("Left", false);
+            anim.SetBool("Up", false);
+        }
+        else if(rotz > 45 && rotz < 115)
+        {
+            anim.SetBool("Right", false);
+            anim.SetBool("Left", false);
+            anim.SetBool("Up", true);
+        }
+        else if (rotz > 115 && rotz < 205)
+        {
+            anim.SetBool("Right", false);
+            anim.SetBool("Left", true);
+            anim.SetBool("Up", false);
+        }
+        else if(rotz > 205 && rotz < 315)
+        {
+            anim.SetBool("Right", false);
+            anim.SetBool("Left", false);
+            anim.SetBool("Up", false);
+        }
         return true;
     }
     public IEnumerator TrackPlayer()
@@ -123,7 +151,7 @@ public class AIController : MonoBehaviour
             currentTimer -= Time.deltaTime;
             if (currentTimer <= 0)
             {
-                Animator anim = GetComponent<Animator>();
+                
                 if (gunType == weaponType.Shotgun)
                 {
                     anim.SetTrigger("Shoot");
