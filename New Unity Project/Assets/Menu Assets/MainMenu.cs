@@ -10,6 +10,7 @@ public class MainMenu : MonoBehaviour
 
     public GameObject optionsMenu;
     public GameObject mainMenu;
+    public GameObject creditsMenu;
 
     public AudioMixer audioMixer;
 
@@ -51,5 +52,15 @@ public class MainMenu : MonoBehaviour
     public void changeVolume (float volume)
     {
         audioMixer.SetFloat("PrimeVolume", volume);
+    }
+    public void RollCredits()
+    {
+        creditsMenu.SetActive(true);
+        mainMenu.SetActive(false);
+    }
+    public void BackCredits()
+    {
+        creditsMenu.SetActive(false);
+        mainMenu.SetActive(true);
     }
 }
