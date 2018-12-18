@@ -10,11 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6aba1a756a1843e478904e3c1e1be2e4, type: 3}
-  m_Name: Lily line 10
+  m_Name: Lily line 1
   m_EditorClassIdentifier: 
-  text: If you invented the skateboard we would be rolling in dough. Instead you're
-    sitting here messing with a Samsung Galaxy Note 7
-  time: 4
+  text: Wow you cam back quick....
+  time: 3
   nextEvent: 
-  voice: {fileID: 8300000, guid: 60d43f728da0b8a429409b874444fca6, type: 3}
+  voice: {fileID: 8300000, guid: 5b804108a9fec1c4ab57da2207da6ca9, type: 3}
   interuptable: 0

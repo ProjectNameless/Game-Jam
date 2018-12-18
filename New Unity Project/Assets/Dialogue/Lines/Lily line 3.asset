@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   text: You've been working on that thing for like six months and it hasn't made a
     spark
-  time: 5
+  time: 4
   nextEvent: 
   voice: {fileID: 8300000, guid: 1bf7a3ea7c35d504bb98b735c3dd8ec8, type: 3}
   interuptable: 0

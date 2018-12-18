@@ -8,10 +8,11 @@ public class CallMultipleEvents : Event
     public List<Event> eventsToCall = new List<Event>();
     public override void Call()
     {
-        base.Call();
         foreach (Event _Event in eventsToCall)
         {
             _Event.Call();
         }
+        next.enabled = true;
+        next.Call();
     }
 }

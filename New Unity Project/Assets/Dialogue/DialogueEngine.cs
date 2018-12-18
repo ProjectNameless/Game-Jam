@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class DialogueEngine : MonoBehaviour {
     public Text Captions;
     private AudioSource lastCall;
+    public Event next;
     #region singleton
     public static DialogueEngine instance;
     private void Awake()
@@ -53,7 +54,7 @@ public class DialogueEngine : MonoBehaviour {
                 float lettersPerSecond = (currentDialogue.text.Length - 1) / dialogueWithAudio.time;
                 int letterIndex = 0;
                 Captions.text = "";
-                while ((Captions.text.Length < currentDialogue.text.Length) && (!Input.GetKeyDown(KeyCode.Return)))
+                while ((Captions.text.Length < currentDialogue.text.Length))
                 {
                     Captions.text += currentDialogue.text[letterIndex];
                     letterIndex++;
@@ -86,5 +87,6 @@ public class DialogueEngine : MonoBehaviour {
             }
             Captions.text = "";
         }
+        next.Call();
     }
 }

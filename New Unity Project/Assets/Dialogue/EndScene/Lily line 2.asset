@@ -10,11 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6aba1a756a1843e478904e3c1e1be2e4, type: 3}
-  m_Name: Lily line 10
+  m_Name: Lily line 2
   m_EditorClassIdentifier: 
-  text: If you invented the skateboard we would be rolling in dough. Instead you're
-    sitting here messing with a Samsung Galaxy Note 7
-  time: 4
+  text: "Yeah how was it? I\u2019m sure you\u2019ve been through an experience and
+    after a trigger have been forced to adapt to your new surroundings and come back
+    into your normal life a changed man right?"
+  time: 12
   nextEvent: 
-  voice: {fileID: 8300000, guid: 60d43f728da0b8a429409b874444fca6, type: 3}
+  voice: {fileID: 8300000, guid: 1190331ca63799748a353510b9f9c30f, type: 3}
   interuptable: 0
