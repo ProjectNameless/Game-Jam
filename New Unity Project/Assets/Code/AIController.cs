@@ -29,6 +29,10 @@ public class AIController : MonoBehaviour
     public int health;
     public GameObject gunBarrel;
     Animator anim;
+    public AudioSource gunShot;
+    public AudioClip SMGround;
+    public AudioClip ShotgunRound;
+    public AudioClip PistolRound;
     private void Start()
     {
         List<Vector3> waypointsToAdd = new List<Vector3>();
@@ -74,7 +78,7 @@ public class AIController : MonoBehaviour
     public void ChangeHealth(int amt, bool ttDeath)
     {
         health += amt;
-        anim.SetInteger("Healh", health);
+        anim.SetInteger("Health", health);
         if (ttDeath)
         {
             anim.SetInteger("Health", int.MinValue);
@@ -166,6 +170,8 @@ public class AIController : MonoBehaviour
                 if (gunType == weaponType.Shotgun)
                 {
                     anim.SetTrigger("Shoot");
+                    gunShot.clip = ShotgunRound;
+                    gunShot.Play();
                     Instantiate(shotgunBulletPrefab, gunBarrel.transform.position, gunBarrel.transform.rotation);
                     currentTimer = fireRate;
                 }
@@ -174,6 +180,8 @@ public class AIController : MonoBehaviour
                     for (int i = 0; i < numOfRoundsToFire; i++)
                     {
                         anim.SetTrigger("Shoot");
+                        gunShot.clip = SMGround;
+                        gunShot.Play();
                         Bullet bullet = Instantiate(SMGBulletPrefab, gunBarrel.transform.position, gunBarrel.transform.rotation).GetComponent<Bullet>();
                         bullet.init(this);
                         yield return new WaitForSeconds(.1f);
@@ -182,6 +190,8 @@ public class AIController : MonoBehaviour
                 }else if(gunType == weaponType.Pistol)
                 {
                     anim.SetTrigger("Shoot");
+                    gunShot.clip = PistolRound;
+                    gunShot.Play();
                     Instantiate(pistolBulletPrefab, gunBarrel.transform.position, gunBarrel.transform.rotation);
                     currentTimer = fireRate;
                 }
