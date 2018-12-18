@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6aba1a756a1843e478904e3c1e1be2e4, type: 3}
+  m_Name: Prof line 5
+  m_EditorClassIdentifier: 
+  text: "Yeah I think I\u2019ve learned how important it is to cherish the present
+    and not try to live in the past or future trying to relive former glories or skip
+    over important parts of life that build my character and make me better as a human
+    being."
+  time: 15
+  nextEvent: 
+  voice: {fileID: 8300000, guid: a54730fd83973a645b975cd1954cedae, type: 3}
+  interuptable: 0
