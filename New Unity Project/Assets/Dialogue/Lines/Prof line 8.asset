@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Prof line 8
   m_EditorClassIdentifier: 
   text: I invented the skateboard in my past aswell as my future
-  time: 4
+  time: 3
   nextEvent: 
   voice: {fileID: 8300000, guid: 349237a38e270524eb91cf1a8f478b2b, type: 3}
   interuptable: 0

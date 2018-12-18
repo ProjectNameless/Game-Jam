@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   text: If you invented the skateboard we would be rolling in dough. Instead you're
     sitting here messing with a Samsung Galaxy Note 7
-  time: 5
+  time: 4
   nextEvent: 
   voice: {fileID: 8300000, guid: 60d43f728da0b8a429409b874444fca6, type: 3}
   interuptable: 0

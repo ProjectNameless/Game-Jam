@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Lily line 2
   m_EditorClassIdentifier: 
   text: 'At least I''m sane. '
-  time: 3
+  time: 2
   nextEvent: 
   voice: {fileID: 8300000, guid: a832e9fe6d0580d4fb13921fb1feb3fc, type: 3}
   interuptable: 0
