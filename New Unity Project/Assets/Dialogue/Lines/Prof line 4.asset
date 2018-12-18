@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Prof line 4
   m_EditorClassIdentifier: 
   text: He got married TWICE.
-  time: 1
+  time: 3
   nextEvent: 
   voice: {fileID: 8300000, guid: 0d15b365381aad54a82aae71ecb4b82f, type: 3}
   interuptable: 0

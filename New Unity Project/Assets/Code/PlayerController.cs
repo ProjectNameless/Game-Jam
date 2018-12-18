@@ -21,6 +21,8 @@ public class PlayerController : MonoBehaviour
     public float maxSprint;
     private float sprintTime = 0;
     private float sprintCooldown = 0;
+    public Animator anim;
+    public GameObject pivot;
     // Update is called once per frame
     private void Start()
     {
@@ -51,15 +53,17 @@ public class PlayerController : MonoBehaviour
                 sprintCooldown = maxSprint * 2;
                 speed = regularSpeed;
             }
+            anim.SetFloat("Horizontal", Input.GetAxisRaw("Horizontal"));
+            anim.SetFloat("Vertical", Input.GetAxisRaw("Vertical"));
             transform.position += (new Vector3(Input.GetAxisRaw("Horizontal") * speed * Time.deltaTime, Input.GetAxisRaw("Vertical") * speed * Time.deltaTime, 0));
             faceDirectionMouse();
             if (Input.GetMouseButtonDown(0))
             {
-                SwingAxe();
+                SwingWrench();
             }
             if (Input.GetKeyDown(KeyCode.B))
             {
-                Instantiate(timeBomb, transform.position, transform.rotation);
+                Instantiate(timeBomb, pivot.transform.position, pivot.transform.rotation);
             }
         }
     }
@@ -91,7 +95,7 @@ public class PlayerController : MonoBehaviour
         diff.Normalize();
 
         float rot_z = Mathf.Atan2(diff.y, diff.x) * Mathf.Rad2Deg;
-        transform.rotation = Quaternion.Euler(0f, 0f, rot_z);
+        pivot.transform.rotation = Quaternion.Euler(0f, 0f, rot_z);
     }
     IEnumerator KillTimer(AIController killer, TimeTravel[] travelers)
     {
@@ -116,14 +120,14 @@ public class PlayerController : MonoBehaviour
             SceneManager.LoadScene(3);
         }
     }
-    void SwingAxe()
+    void SwingWrench()
     {
-        //Animate
+        wrench.GetComponent<Animator>().SetTrigger("Swing");
         RaycastHit2D hit = Physics2D.Raycast(wrench.transform.position, transform.position - Camera.main.ScreenToWorldPoint(Input.mousePosition), 1f, whatToHit);
         if (hit.collider != null)
         {
             Debug.Log("Hit " + hit.collider.name);
-            hit.collider.GetComponent<AIController>().ChangeHealth(wrenchDamage);
+            hit.collider.GetComponent<AIController>().ChangeHealth(wrenchDamage, false);
         }
     }
 }

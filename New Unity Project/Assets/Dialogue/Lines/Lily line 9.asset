@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Lily line 9
   m_EditorClassIdentifier: 
   text: What's your first?
-  time: 1
+  time: 2
   nextEvent: 
   voice: {fileID: 8300000, guid: f0fc5f2b73b40cd41a9d06a612abfc61, type: 3}
   interuptable: 0

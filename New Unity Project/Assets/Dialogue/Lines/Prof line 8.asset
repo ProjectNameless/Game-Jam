@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6aba1a756a1843e478904e3c1e1be2e4, type: 3}
   m_Name: Prof line 8
   m_EditorClassIdentifier: 
-  text: The skateboard. Our legacy as a people.
-  time: 1
+  text: I invented the skateboard in my past aswell as my future
+  time: 4
   nextEvent: 
-  voice: {fileID: 0}
+  voice: {fileID: 8300000, guid: 349237a38e270524eb91cf1a8f478b2b, type: 3}
   interuptable: 0

@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   text: Dang Liloose. How could your vietnamese perversions mess with my master plans!?
     I'll need to find my nearest electronics store and get this fixed.
-  time: 1
+  time: 5
   nextEvent: 
   voice: {fileID: 8300000, guid: b57c308a3847a084d90039c3e7e05757, type: 3}
   interuptable: 0

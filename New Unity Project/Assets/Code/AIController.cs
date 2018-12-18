@@ -41,23 +41,26 @@ public class AIController : MonoBehaviour
     }
     void Update()
     {
-        if (!CloseEnough(transform.position, waypoints[index], .1f) && !playerSpotted)
+        if (health > 0)
         {
-            if (tracking != null)
-                StopCoroutine(tracking);
-            if(FaceDirection(waypoints[index]))
-            transform.position = transform.position - ((transform.position - waypoints[index]).normalized * speed * Time.deltaTime);
-        }
-        else if (!playerSpotted)
-        {
-            index++;
-            if (index >= waypoints.Length)
+            if (!CloseEnough(transform.position, waypoints[index], .1f) && !playerSpotted)
             {
-                index = 0;
-                if (!onPatrol)
-                    speed = 0;
+                if (tracking != null)
+                    StopCoroutine(tracking);
+                if (FaceDirection(waypoints[index]))
+                    transform.position = transform.position - ((transform.position - waypoints[index]).normalized * speed * Time.deltaTime);
             }
-            RefreshPath(waypoints[index]);
+            else if (!playerSpotted)
+            {
+                index++;
+                if (index >= waypoints.Length)
+                {
+                    index = 0;
+                    if (!onPatrol)
+                        speed = 0;
+                }
+                RefreshPath(waypoints[index]);
+            }
         }
     }
     public void SpottedPlayer()
@@ -68,9 +71,17 @@ public class AIController : MonoBehaviour
             tracking = StartCoroutine(TrackPlayer());
         }
     }
-    public void ChangeHealth(int amt)
+    public void ChangeHealth(int amt, bool ttDeath)
     {
         health += amt;
+        anim.SetInteger("Healh", health);
+        if (ttDeath)
+        {
+            anim.SetInteger("Health", int.MinValue);
+            anim.SetTrigger("TimeBombDeath");
+            Destroy(gunBarrel);
+            Destroy(this);
+        }
     }
     bool CloseEnough(Vector3 a, Vector3 b, float maxDistance)
     {

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Prof line 1
   m_EditorClassIdentifier: 
   text: LILIAM It's very nearly done this will change the WORLD!
-  time: 1
+  time: 5
   nextEvent: 
   voice: {fileID: 8300000, guid: ec4d92a337d74f448b0c095801b06db2, type: 3}
   interuptable: 0

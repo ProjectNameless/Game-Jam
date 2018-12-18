@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Lily line 6
   m_EditorClassIdentifier: 
   text: The real question is if this thing is gonna make any money.
-  time: 1
+  time: 5
   nextEvent: 
   voice: {fileID: 8300000, guid: 0bfd71db67e62444d978a2043fbfd20f, type: 3}
   interuptable: 0

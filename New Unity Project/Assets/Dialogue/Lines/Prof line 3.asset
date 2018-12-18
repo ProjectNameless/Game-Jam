@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Prof line 3
   m_EditorClassIdentifier: 
   text: Libble I would like you to name one genius that isnt crazy.
-  time: 1
+  time: 5
   nextEvent: 
   voice: {fileID: 8300000, guid: 866e929598f73b74db67d355e9c05767, type: 3}
   interuptable: 0

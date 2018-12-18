@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Lily line 5
   m_EditorClassIdentifier: 
   text: (sarcastically) Ah yes clearly a madman
-  time: 1
+  time: 4
   nextEvent: 
   voice: {fileID: 8300000, guid: b4351c6f51ddd3a4a94bd6a060c217ac, type: 3}
   interuptable: 0

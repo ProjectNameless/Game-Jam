@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Lily line 7
   m_EditorClassIdentifier: 
   text: ' My world class spaghetti ain''t free you know'
-  time: 1
+  time: 4
   nextEvent: 
   voice: {fileID: 8300000, guid: 28d8b11d2dfee444282ba4a4a33db384, type: 3}
   interuptable: 0

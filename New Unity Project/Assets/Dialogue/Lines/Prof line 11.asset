@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Prof line 11
   m_EditorClassIdentifier: 
   text: Oh man, oh man this isn't good. I had that house fully paid for. Send me back!
-  time: 1
+  time: 5
   nextEvent: 
   voice: {fileID: 8300000, guid: dc286183368505c48b376dd854cccf5c, type: 3}
   interuptable: 0

@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   text: The time machine doesnt work. There's a figma of (insert anime character here)
     stabbed into the back of the machine. It's a note 7 so it explodes
-  time: 7
+  time: 5
   nextEvent: 

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Prof line 9
   m_EditorClassIdentifier: 
   text: I'm about to INVENT the couch!
-  time: 1
+  time: 4
   nextEvent: 
   voice: {fileID: 8300000, guid: 0acc92dbf28984e4195ab8cea232a5b4, type: 3}
   interuptable: 0

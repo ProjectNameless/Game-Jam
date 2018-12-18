@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Prof line 10
   m_EditorClassIdentifier: 
   text: Whatever, I imagine nothing cool happens then anyways.
-  time: 1
+  time: 5
   nextEvent: 
   voice: {fileID: 8300000, guid: 6e3dda2aadcbe594aba180ea551367fc, type: 3}
   interuptable: 0

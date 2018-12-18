@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   text: Cop log. I have found an unregistered unarmed human during my TH0T Patrol
     Will now commence T.H.I.C.C protocol
-  time: 1
+  time: 5
   nextEvent: 
   voice: {fileID: 8300000, guid: 51eff4371dc10c943bf8542ea56193f1, type: 3}
   interuptable: 0

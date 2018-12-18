@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Prof line 6
   m_EditorClassIdentifier: 
   text: You're right. Although cheap we are indeed spending money on them, a travesty
-  time: 0
+  time: 5
   nextEvent: 
   voice: {fileID: 8300000, guid: 67053726890931a44baefe1aa38c911b, type: 3}
   interuptable: 0

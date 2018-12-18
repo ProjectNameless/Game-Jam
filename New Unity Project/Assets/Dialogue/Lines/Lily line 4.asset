@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Lily line 4
   m_EditorClassIdentifier: 
   text: What about Albert Einstein?
-  time: 1
+  time: 4
   nextEvent: 
   voice: {fileID: 8300000, guid: 0d2454b926c62554b9c6a28af42a1c05, type: 3}
   interuptable: 0

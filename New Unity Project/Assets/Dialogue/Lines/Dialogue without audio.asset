@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   text: He lands outside the house but in the future. It's been turned into a wallmarket
     wallpaper and window store
-  time: 5
+  time: 3
   nextEvent: 

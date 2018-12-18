@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   text: YOU THOUGHT WRONG. Those chinese cartoons and comics are rotting your brain
     if you think that I even have a Phd.
-  time: 1
+  time: 7
   nextEvent: 
   voice: {fileID: 8300000, guid: 4ece43300dffb74409111945515b6363, type: 3}
   interuptable: 0

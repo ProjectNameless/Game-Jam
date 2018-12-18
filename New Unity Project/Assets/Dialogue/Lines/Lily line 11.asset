@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Lily line 11
   m_EditorClassIdentifier: 
   text: If you use the time machine you're sleeping on the couch
-  time: 1
+  time: 4
   nextEvent: 
   voice: {fileID: 8300000, guid: 378223752c894e14abd453a8b384de94, type: 3}
   interuptable: 0

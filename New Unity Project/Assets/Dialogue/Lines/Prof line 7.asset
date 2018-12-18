@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Prof line 7
   m_EditorClassIdentifier: 
   text: NEVERMIND THAT IT'S READY. My second greatist creation.
-  time: 1
+  time: 4
   nextEvent: 
   voice: {fileID: 8300000, guid: 5857514e566a25a48a11e1b219b65ba5, type: 3}
   interuptable: 0

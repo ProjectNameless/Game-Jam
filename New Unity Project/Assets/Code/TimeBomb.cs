@@ -24,7 +24,7 @@ public class TimeBomb : MonoBehaviour
             {
                 if (collider.gameObject.GetComponent<AIController>() != null)
                 {
-                    collider.gameObject.GetComponent<AIController>().ChangeHealth(1000);
+                    collider.gameObject.GetComponent<AIController>().ChangeHealth(Mathf.RoundToInt(-1000 * Vector2.Distance(transform.position, collider.transform.position) / explosionRadius), true);
                     //play aging animation
                 }
             }

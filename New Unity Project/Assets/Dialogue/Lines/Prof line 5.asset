@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Prof line 5
   m_EditorClassIdentifier: 
   text: I'm glad you agree.
-  time: 1
+  time: 3
   nextEvent: 
   voice: {fileID: 8300000, guid: 9d11cbe49ebf40548abd01d683cc8fd2, type: 3}
   interuptable: 0

@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   text: I thought after a couple of years of living together you would remember my
     name
-  time: 1
+  time: 4
   nextEvent: 
   voice: {fileID: 8300000, guid: b955a79bc5fe7324599c597830949eb5, type: 3}
   interuptable: 0
