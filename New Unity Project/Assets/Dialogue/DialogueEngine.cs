@@ -60,6 +60,10 @@ public class DialogueEngine : MonoBehaviour {
                     yield return new WaitForSeconds(1 / lettersPerSecond);
                 }
                 Captions.text = currentDialogue.text;
+                while (!Input.GetKeyDown(KeyCode.Return))
+                {
+                    yield return null;
+                }
             }
             else
             {
@@ -75,10 +79,9 @@ public class DialogueEngine : MonoBehaviour {
                 Captions.text = currentDialogue.text;
                 float timeTillExpire = currentDialogue.time;
                 yield return null;
-                while (timeTillExpire > 0 && !Input.GetKeyDown(KeyCode.Return))
+                while (!Input.GetKeyDown(KeyCode.Return))
                 {
                     yield return null;
-                    timeTillExpire -= Time.deltaTime;
                 }
             }
             Captions.text = "";
