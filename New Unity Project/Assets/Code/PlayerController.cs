@@ -23,6 +23,7 @@ public class PlayerController : MonoBehaviour
     private float sprintCooldown = 0;
     public Animator anim;
     public GameObject pivot;
+    public AudioSource wrenchSource;
     // Update is called once per frame
     private void Start()
     {
@@ -126,6 +127,7 @@ public class PlayerController : MonoBehaviour
         RaycastHit2D hit = Physics2D.Raycast(wrench.transform.position, transform.position - Camera.main.ScreenToWorldPoint(Input.mousePosition), 1f, whatToHit);
         if (hit.collider != null)
         {
+            wrenchSource.Play();
             Debug.Log("Hit " + hit.collider.name);
             hit.collider.GetComponent<AIController>().ChangeHealth(wrenchDamage, false);
         }
