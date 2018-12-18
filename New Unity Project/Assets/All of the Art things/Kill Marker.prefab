@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 5168189043456655890}
   - component: {fileID: 1839853597593165799}
-  - component: {fileID: 5065559107371361133}
   m_Layer: 0
   m_Name: Kill Marker
   m_TagString: Untagged
@@ -80,17 +79,3 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &5065559107371361133
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 590619812933022947}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b84f8c13712316b4cb008fe21deb488c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  offset: {x: 0, y: 1, z: 0}
-  target: {fileID: 0}

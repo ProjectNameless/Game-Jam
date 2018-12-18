@@ -12,8 +12,9 @@ public class TimeStampAI : TimeStamp
     }
     public override void Apply(GameObject target)
     {
-        base.Apply(target);
+        target.transform.position = position;
         AIController controller = target.GetComponent<AIController>();
+        controller.gunBarrel.transform.rotation = rotation;
         if (controller.index != waypointIndex)
         {
             controller.index = waypointIndex;

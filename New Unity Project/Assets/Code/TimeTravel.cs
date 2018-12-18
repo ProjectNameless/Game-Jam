@@ -18,6 +18,7 @@ public class TimeTravel : MonoBehaviour
         while (stamps.Count > 0)
         {
             rewinding = true;
+            if (stamps[0] != null && gameObject != null)
             stamps[0].Apply(gameObject);
             stamps.RemoveAt(0);
             yield return null;
@@ -34,5 +35,10 @@ public class TimeTravel : MonoBehaviour
         if (stamps.Count > maximumStamps)
             stamps.RemoveAt(stamps.Count - 1);
         stamps.Insert(0, new TimeStamp(transform.position, transform.rotation));
+    }
+    private void OnDestroy()
+    {
+        StopAllCoroutines();
+        stamps.Clear();
     }
 }

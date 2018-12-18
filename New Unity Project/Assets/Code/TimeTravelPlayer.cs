@@ -14,4 +14,8 @@ public class TimeTravelPlayer : TimeTravel
         gameObject.GetComponent<PlayerController>();
         base.Clear();
     }
+    public override void Record()
+    {
+        stamps.Insert(0, new TimeStampPlayer(transform.position, transform.rotation, GetComponent<PlayerController>().currentHealth));
+    }
 }

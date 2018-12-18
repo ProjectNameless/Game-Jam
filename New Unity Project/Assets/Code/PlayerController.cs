@@ -75,12 +75,22 @@ public class PlayerController : MonoBehaviour
         GameObject.FindGameObjectWithTag("Health Text").GetComponent<Text>().text = "Health: " + currentHealth;
         if (currentHealth <= 0)
         {
-            TimeTravel[] travelers = FindObjectsOfType<TimeTravel>();
+            /*TimeTravel[] travelers = FindObjectsOfType<TimeTravel>();
             foreach (TimeTravel traveler in travelers)
+            {
+                if (traveler != null)
                 StartCoroutine(traveler.Rewind());
-            return travelers;
+            }
+            */
+            return null;
         }
         return null;
+    }
+    public void SetHealth(int amt)
+    {
+        currentHealth = amt;
+        GameObject.FindGameObjectWithTag("Health Slider").GetComponent<Slider>().value = currentHealth;
+        GameObject.FindGameObjectWithTag("Health Text").GetComponent<Text>().text = "Health: " + currentHealth;
     }
     public void changeHealth(int amt, AIController killer)
     {
@@ -100,17 +110,19 @@ public class PlayerController : MonoBehaviour
     }
     IEnumerator KillTimer(AIController killer, TimeTravel[] travelers)
     {
+        Debug.Log("Kill timer started");
         killTime = startingKillTime;
         bool stillRewinding = true;
         while (stillRewinding)
         {
             foreach(TimeTravel tt in travelers)
             {
+                if (tt != null)
                 stillRewinding = tt.rewinding;
                 yield return null;
             }
         }
-        Instantiate(marker).GetComponent<FollowGameObject>().target = killer.gameObject.transform;
+        Instantiate(marker, new Vector3(killer.transform.position.x, killer.transform.position.y + 1), killer.transform.rotation, killer.transform);
         while (killTime > 0)
         {
             killTime -= Time.deltaTime;
@@ -118,13 +130,13 @@ public class PlayerController : MonoBehaviour
         }
         if(killer.gameObject.GetComponent<enemyHealth>().health > 0)
         {
-            SceneManager.LoadScene(3);
+            SceneManager.LoadScene(4);
         }
     }
     void SwingWrench()
     {
         wrench.GetComponent<Animator>().SetTrigger("Swing");
-        RaycastHit2D hit = Physics2D.Raycast(wrench.transform.position, transform.position - Camera.main.ScreenToWorldPoint(Input.mousePosition), 1f, whatToHit);
+        RaycastHit2D hit = Physics2D.Raycast(wrench.transform.position, transform.position - Camera.main.ScreenToWorldPoint(Input.mousePosition), 2f, whatToHit);
         if (hit.collider != null)
         {
             wrenchSource.Play();

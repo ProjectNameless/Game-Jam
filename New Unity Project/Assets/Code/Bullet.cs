@@ -22,7 +22,7 @@ public class Bullet : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.GetComponent<PlayerController>() != null)
-            collision.gameObject.GetComponent<PlayerController>().changeHealth(damage, shooter);
+            //collision.gameObject.GetComponent<PlayerController>().changeHealth(damage, shooter);
         if (collision.gameObject.tag.Equals("Player"))
         Destroy(gameObject);
     }

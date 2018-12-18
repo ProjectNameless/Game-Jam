@@ -6,10 +6,6 @@ public class ChangeDialogueEvent : Event {
 
     public GameObject targetGO;
     public DialogueSO[] dialogueSOs;
-    private void Awake()
-    {
-        Call();
-    }
     public override void Call()
     {
         DialogueEngine.instance.StartDisplayTextInTime(dialogueSOs, gameObject);

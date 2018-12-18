@@ -959,6 +959,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Captions: {fileID: 1182354311}
   next: {fileID: 1770819758}
+  first: {fileID: 1770819750}
 --- !u!114 &1770819752
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1172,11 +1173,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c438c4969ee62440a35300b52430246, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  next: {fileID: 1770819757}
+  next: {fileID: 0}
   calls: 0
   eventsToCall:
   - {fileID: 446409328}
   - {fileID: 546100032}
+  - {fileID: 1770819757}
 --- !u!114 &1770819759
 MonoBehaviour:
   m_ObjectHideFlags: 0

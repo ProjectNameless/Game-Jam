@@ -7,6 +7,7 @@ public class DialogueEngine : MonoBehaviour {
     public Text Captions;
     private AudioSource lastCall;
     public Event next;
+    public Event first;
     #region singleton
     public static DialogueEngine instance;
     private void Awake()
@@ -16,6 +17,7 @@ public class DialogueEngine : MonoBehaviour {
     #endregion
     // Use this for initialization
     void Start () {
+        first.Call();
 	}
     /// <summary>
     /// displays whole string within time specified. letters per second = text.length/time
