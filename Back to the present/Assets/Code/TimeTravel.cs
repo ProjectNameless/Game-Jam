@@ -11,7 +11,7 @@ public class TimeTravel : MonoBehaviour
     void Update()
     {
         if (!rewinding)
-                Record();
+            Record();
     }
     public virtual IEnumerator Rewind()
     {

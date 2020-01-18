@@ -10,11 +10,7 @@ public class AIController : MonoBehaviour
     public Vector3[] waypoints;
     public int index;
     public float speed;
-    private float startTime;
-    private float totalDistance;
-    private Vector3 startPos;
     public bool onPatrol;
-    public bool playerSpotted;
     public int minRange;
     public int maxRange;
     public Coroutine tracking;
@@ -33,6 +29,10 @@ public class AIController : MonoBehaviour
     public AudioClip SMGround;
     public AudioClip ShotgunRound;
     public AudioClip PistolRound;
+
+    public TimeTravelAI AiTimeTravel;
+    public bool isPlayerSpotted = false;
+    public Vector3 Target;
     private void Start()
     {
         List<Vector3> waypointsToAdd = new List<Vector3>();
@@ -42,44 +42,47 @@ public class AIController : MonoBehaviour
         }
         waypoints = waypointsToAdd.ToArray();
         anim = GetComponent<Animator>();
+        Target = waypoints[index];
     }
     void Update()
     {
         if (health > 0)
         {
-            if (!CloseEnough(transform.position, waypoints[index], .1f) && !playerSpotted)
+            if (!isPlayerSpotted)
             {
                 if (tracking != null)
                     StopCoroutine(tracking);
-                if (FaceDirection(waypoints[index]))
-                    transform.position = transform.position - ((transform.position - waypoints[index]).normalized * speed * Time.deltaTime);
-            }
-            else if (!playerSpotted)
-            {
-                index++;
-                if (index >= waypoints.Length)
+                if (CloseEnough(transform.position, waypoints[index], .1f))
                 {
-                    index = 0;
-                    if (!onPatrol)
-                        speed = 0;
+                    index++;
+                    if (index >= waypoints.Length)
+                    {
+                        index = 0;
+                        if (!onPatrol)
+                            speed = 0;
+                    }
+                    Target = waypoints[index];
                 }
-                RefreshPath(waypoints[index]);
+                if (FaceDirection(Target))
+                {
+                    transform.position = transform.position - ((transform.position - Target).normalized * speed * Time.deltaTime);
+                }
             }
         }
     }
     public void SpottedPlayer()
     {
-        if (!playerSpotted)
+        if (!isPlayerSpotted)
         {
-            playerSpotted = true;
+            isPlayerSpotted = true;
             tracking = StartCoroutine(TrackPlayer());
         }
     }
-    public void ChangeHealth(int amt, bool ttDeath)
+    public void ChangeHealth(int amt, bool deathByTimeBomb)
     {
         health += amt;
         anim.SetInteger("Health", health);
-        if (ttDeath)
+        if (deathByTimeBomb)
         {
             anim.SetInteger("Health", int.MinValue);
             anim.SetTrigger("TimeBombDeath");
@@ -99,15 +102,9 @@ public class AIController : MonoBehaviour
             return true;
         return false;
     }
-    public void RefreshPath(Vector3 worldPosition)
+    public bool FaceDirection(Vector3 target)
     {
-        startTime = Time.time;
-        totalDistance = Vector3.Distance(transform.position, waypoints[index]);
-        startPos = transform.position;
-    }
-    public bool FaceDirection(Vector3 worldPosition)
-    {
-        Vector3 Direction = worldPosition - gunBarrel.transform.position;
+        Vector3 Direction = target - gunBarrel.transform.position;
         gunBarrel.transform.right = gunBarrel.transform.right.normalized - ((gunBarrel.transform.right - Direction) * speed * Time.deltaTime);
         float rotz = gunBarrel.transform.rotation.eulerAngles.z;
         //Debug.Log(rotz);
@@ -117,7 +114,7 @@ public class AIController : MonoBehaviour
             anim.SetBool("Left", false);
             anim.SetBool("Up", false);
         }
-        else if(rotz > 45 && rotz < 115)
+        else if (rotz > 45 && rotz < 115)
         {
             anim.SetBool("Right", false);
             anim.SetBool("Left", false);
@@ -129,7 +126,7 @@ public class AIController : MonoBehaviour
             anim.SetBool("Left", true);
             anim.SetBool("Up", false);
         }
-        else if(rotz > 205 && rotz < 315)
+        else if (rotz > 205 && rotz < 315)
         {
             anim.SetBool("Right", false);
             anim.SetBool("Left", false);
@@ -141,24 +138,21 @@ public class AIController : MonoBehaviour
     {
         currentTimer = fireRate;
         GameObject player = GameObject.FindGameObjectWithTag("Player");
-        RefreshPath(player.transform.position);
         while (true)
         {
             //Debug.Log("Running");
-            FaceDirection(player.transform.position);
-            while (!CloseEnough(transform.position, player.transform.position, minRange))
+            while (!CloseEnough(transform.position, Target, minRange))
             {
                 //transform.position = Vector3.Lerp(startPos, player.transform.position, (Time.time - startTime) * speed / totalDistance);
-                transform.position = transform.position - ((transform.position - player.transform.position).normalized * speed * Time.deltaTime);
+                transform.position = transform.position - ((transform.position - Target).normalized * speed * Time.deltaTime);
                 FaceDirection(player.transform.position);
                 //shoot();
                 yield return null;
             }
-            RefreshPath(player.transform.position);
-            while (TooClose(transform.position, player.transform.position, maxRange))
+            while (TooClose(transform.position, Target, maxRange))
             {
                 //transform.position = Vector3.Lerp(startPos, startPos + (transform.position - player.transform.position), (Time.time - startTime) * speed / totalDistance);
-                transform.position = transform.position + ((transform.position - player.transform.position).normalized * speed * Time.deltaTime);
+                transform.position = transform.position + ((transform.position - Target).normalized * speed * Time.deltaTime);
                 FaceDirection(player.transform.position);
                 //shoot();
                 yield return null;
@@ -166,7 +160,7 @@ public class AIController : MonoBehaviour
             currentTimer -= Time.deltaTime;
             if (currentTimer <= 0)
             {
-                
+
                 if (gunType == weaponType.Shotgun)
                 {
                     anim.SetTrigger("Shoot");
@@ -187,7 +181,8 @@ public class AIController : MonoBehaviour
                         yield return new WaitForSeconds(.1f);
                     }
                     currentTimer = fireRate;
-                }else if(gunType == weaponType.Pistol)
+                }
+                else if (gunType == weaponType.Pistol)
                 {
                     anim.SetTrigger("Shoot");
                     gunShot.clip = PistolRound;

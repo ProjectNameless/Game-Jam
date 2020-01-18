@@ -56,6 +56,7 @@ SpriteRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -174,6 +175,7 @@ SpriteRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -238,6 +240,7 @@ MonoBehaviour:
   SMGround: {fileID: 8300000, guid: 2f745a1af66b3b54690063c6abb129db, type: 3}
   ShotgunRound: {fileID: 8300000, guid: a685f2002f6f86f499707c67e93e457c, type: 3}
   PistolRound: {fileID: 8300000, guid: ecbce68cd08287845b75d3c524f5bf8e, type: 3}
+  AiTimeTravel: {fileID: 4702945834091251744}
 --- !u!114 &4702945834091251744
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -502,6 +505,7 @@ SpriteRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0

@@ -18,11 +18,10 @@ public class TimeStampAI : TimeStamp
         if (controller.index != waypointIndex)
         {
             controller.index = waypointIndex;
-            controller.RefreshPath(controller.waypoints[controller.index]);
         }
-        if (controller.playerSpotted == true && playerSpotted == false)
+        if (controller.isPlayerSpotted == true && playerSpotted == false)
         {
-            controller.playerSpotted = false;
+            controller.isPlayerSpotted = false;
             controller.StopCoroutine(controller.tracking);
         }
     }

@@ -24,17 +24,30 @@ public class PlayerController : MonoBehaviour
     public Animator anim;
     public GameObject pivot;
     public AudioSource wrenchSource;
+    public TimeTravelPlayer PlayerTimeTravel;
+    public Slider HealthSlider;
+    public Text HealthText;
+
+    public static PlayerController instance;
+
+    private void Awake()
+    {
+        if (instance == null)
+            instance = this;
+        else
+            Destroy(this);
+    }
     // Update is called once per frame
     private void Start()
     {
         currentHealth = maxHealth;
-        GameObject.FindGameObjectWithTag("Health Slider").GetComponent<Slider>().maxValue = maxHealth;
+        HealthSlider.maxValue = maxHealth;
         regularSpeed = speed;
         sprintTime = maxSprint;
     }
     void Update()
     {
-        if (!GetComponent<TimeTravelPlayer>().rewinding)
+        if (!PlayerTimeTravel.rewinding)
         {
             sprintCooldown -= Time.deltaTime;
             if (sprintTime >= 0 && sprintCooldown <= 0)
@@ -48,7 +61,8 @@ public class PlayerController : MonoBehaviour
                 {
                     speed = regularSpeed;
                 }
-            }else if(sprintTime <= 0)
+            }
+            else if (sprintTime <= 0)
             {
                 sprintTime = maxSprint;
                 sprintCooldown = maxSprint * 2;
@@ -57,7 +71,7 @@ public class PlayerController : MonoBehaviour
             anim.SetFloat("Horizontal", Input.GetAxisRaw("Horizontal"));
             anim.SetFloat("Vertical", Input.GetAxisRaw("Vertical"));
             transform.position += (new Vector3(Input.GetAxisRaw("Horizontal") * speed * Time.deltaTime, Input.GetAxisRaw("Vertical") * speed * Time.deltaTime, 0));
-            faceDirectionMouse();
+            FaceMouseDirection();
             if (Input.GetMouseButtonDown(0))
             {
                 SwingWrench();
@@ -68,39 +82,32 @@ public class PlayerController : MonoBehaviour
             }
         }
     }
-    public TimeTravel[] changeHealth(int amt)
+    public TimeTravel[] ChangeHealth(int amt)
     {
         currentHealth += amt;
-        GameObject.FindGameObjectWithTag("Health Slider").GetComponent<Slider>().value = currentHealth;
-        GameObject.FindGameObjectWithTag("Health Text").GetComponent<Text>().text = "Health: " + currentHealth;
+        HealthSlider.value = currentHealth;
+        HealthText.text = "Health: " + currentHealth;
         if (currentHealth <= 0)
         {
-            /*TimeTravel[] travelers = FindObjectsOfType<TimeTravel>();
-            foreach (TimeTravel traveler in travelers)
-            {
-                if (traveler != null)
-                StartCoroutine(traveler.Rewind());
-            }
-            */
-            return null;
+            return EnemyManager.Instance.GetEnemiesTimeTravel();
         }
         return null;
     }
     public void SetHealth(int amt)
     {
         currentHealth = amt;
-        GameObject.FindGameObjectWithTag("Health Slider").GetComponent<Slider>().value = currentHealth;
-        GameObject.FindGameObjectWithTag("Health Text").GetComponent<Text>().text = "Health: " + currentHealth;
+        HealthSlider.value = currentHealth;
+        HealthText.text = "Health: " + currentHealth;
     }
-    public void changeHealth(int amt, AIController killer)
+    public void ChangeHealth(int amt, AIController killer)
     {
-        TimeTravel[] travelers = changeHealth(amt);
+        TimeTravel[] travelers = ChangeHealth(amt);
         if (currentHealth <= 0)
         {
-            StartCoroutine(KillTimer(killer, travelers));
+            StartCoroutine(DeathRewind(killer, travelers));
         }
     }
-    public void faceDirectionMouse()
+    public void FaceMouseDirection()
     {
         Vector3 diff = Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position;
         diff.Normalize();
@@ -108,17 +115,17 @@ public class PlayerController : MonoBehaviour
         float rot_z = Mathf.Atan2(diff.y, diff.x) * Mathf.Rad2Deg;
         pivot.transform.rotation = Quaternion.Euler(0f, 0f, rot_z);
     }
-    IEnumerator KillTimer(AIController killer, TimeTravel[] travelers)
+    IEnumerator DeathRewind(AIController killer, TimeTravel[] travelers)
     {
         Debug.Log("Kill timer started");
         killTime = startingKillTime;
         bool stillRewinding = true;
         while (stillRewinding)
         {
-            foreach(TimeTravel tt in travelers)
+            foreach (TimeTravel tt in travelers)
             {
                 if (tt != null)
-                stillRewinding = tt.rewinding;
+                    stillRewinding = tt.rewinding;
                 yield return null;
             }
         }
@@ -128,7 +135,7 @@ public class PlayerController : MonoBehaviour
             killTime -= Time.deltaTime;
             yield return null;
         }
-        if(killer.gameObject.GetComponent<enemyHealth>().health > 0)
+        if (killer.gameObject.GetComponent<enemyHealth>().health > 0)
         {
             SceneManager.LoadScene(4);
         }
